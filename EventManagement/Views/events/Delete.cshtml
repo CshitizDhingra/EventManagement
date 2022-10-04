@@ -1,0 +1,88 @@
+﻿@model EventManagement.Models.events
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>events</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.edate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.edate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gathering)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gathering)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fo_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fo_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.decorationPlans.dname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.decorationPlans.dname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventType.eventType1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventType.eventType1)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

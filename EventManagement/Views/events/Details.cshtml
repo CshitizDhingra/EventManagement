@@ -1,0 +1,82 @@
+﻿@model EventManagement.Models.events
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>events</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.edate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.edate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.gathering)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.gathering)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.d_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.d_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fo_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fo_id)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.f_price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.f_price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.decorationPlans.dname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.decorationPlans.dname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.eventType.eventType1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.eventType.eventType1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.eid }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

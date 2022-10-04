@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="eventManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="decorationPlans">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="int" Nullable="false" />
+          <Property Name="dname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="pricePerH" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="eid" />
+          </Key>
+          <Property Name="eid" Type="int" Nullable="false" />
+          <Property Name="etype" Type="varchar" MaxLength="50" />
+          <Property Name="edate" Type="varchar" MaxLength="50" />
+          <Property Name="gathering" Type="int" />
+          <Property Name="did" Type="int" />
+          <Property Name="d_price" Type="int" />
+          <Property Name="f_price" Type="int" />
+          <Property Name="total" Type="int" />
+        </EntityType>
+        <EntityType Name="eventType">
+          <Key>
+            <PropertyRef Name="eventType1" />
+          </Key>
+          <Property Name="eventType1" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="foodItems">
+          <Key>
+            <PropertyRef Name="fid" />
+          </Key>
+          <Property Name="fid" Type="int" Nullable="false" />
+          <Property Name="fname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="price" Type="int" Nullable="false" />
+          <Property Name="type" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="f_desc" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="foodOrders">
+          <Key>
+            <PropertyRef Name="fo_id" />
+          </Key>
+          <Property Name="fo_id" Type="int" Nullable="false" />
+          <Property Name="eid" Type="int" Nullable="false" />
+          <Property Name="fid" Type="int" Nullable="false" />
+          <Property Name="qty" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_events_decorationPlans">
+          <End Role="decorationPlans" Type="Self.decorationPlans" Multiplicity="0..1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="decorationPlans">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_eventType">
+          <End Role="eventType" Type="Self.eventType" Multiplicity="0..1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventType">
+              <PropertyRef Name="eventType1" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="etype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_foodOrders_events">
+          <End Role="events" Type="Self.events" Multiplicity="1" />
+          <End Role="foodOrders" Type="Self.foodOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="foodOrders">
+              <PropertyRef Name="eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eventManagementModelStoreContainer">
+          <EntitySet Name="decorationPlans" EntityType="Self.decorationPlans" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="events" EntityType="Self.events" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="eventType" EntityType="Self.eventType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="foodItems" EntityType="Self.foodItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="foodOrders" EntityType="Self.foodOrders" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_events_decorationPlans" Association="Self.FK_events_decorationPlans">
+            <End Role="decorationPlans" EntitySet="decorationPlans" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_eventType" Association="Self.FK_events_eventType">
+            <End Role="eventType" EntitySet="eventType" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_foodOrders_events" Association="Self.FK_foodOrders_events">
+            <End Role="events" EntitySet="events" />
+            <End Role="foodOrders" EntitySet="foodOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eventManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="decorationPlans">
+          <Key>
+            <PropertyRef Name="did" />
+          </Key>
+          <Property Name="did" Type="Int32" Nullable="false" />
+          <Property Name="dname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pricePerH" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="events" Relationship="Self.FK_events_decorationPlans" FromRole="decorationPlans" ToRole="events" />
+        </EntityType>
+        <EntityType Name="events">
+          <Key>
+            <PropertyRef Name="eid" />
+          </Key>
+          <Property Name="eid" Type="Int32" Nullable="false" />
+          <Property Name="etype" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="edate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="gathering" Type="Int32" />
+          <Property Name="did" Type="Int32" />
+          <Property Name="d_price" Type="Int32" />
+          <Property Name="f_price" Type="Int32" />
+          <Property Name="total" Type="Int32" />
+          <NavigationProperty Name="decorationPlans" Relationship="Self.FK_events_decorationPlans" FromRole="events" ToRole="decorationPlans" />
+          <NavigationProperty Name="eventType" Relationship="Self.FK_events_eventType" FromRole="events" ToRole="eventType" />
+          <NavigationProperty Name="foodOrders" Relationship="Self.FK_foodOrders_events" FromRole="events" ToRole="foodOrders" />
+        </EntityType>
+        <EntityType Name="eventType">
+          <Key>
+            <PropertyRef Name="eventType1" />
+          </Key>
+          <Property Name="eventType1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="events" Relationship="Self.FK_events_eventType" FromRole="eventType" ToRole="events" />
+        </EntityType>
+        <EntityType Name="foodItems">
+          <Key>
+            <PropertyRef Name="fid" />
+          </Key>
+          <Property Name="fid" Type="Int32" Nullable="false" />
+          <Property Name="fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price" Type="Int32" Nullable="false" />
+          <Property Name="type" Type="String" MaxLength="1" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="f_desc" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="foodOrders">
+          <Key>
+            <PropertyRef Name="fo_id" />
+          </Key>
+          <Property Name="fo_id" Type="Int32" Nullable="false" />
+          <Property Name="eid" Type="Int32" Nullable="false" />
+          <Property Name="fid" Type="Int32" Nullable="false" />
+          <Property Name="qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="events" Relationship="Self.FK_foodOrders_events" FromRole="foodOrders" ToRole="events" />
+        </EntityType>
+        <Association Name="FK_events_decorationPlans">
+          <End Role="decorationPlans" Type="Self.decorationPlans" Multiplicity="0..1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="decorationPlans">
+              <PropertyRef Name="did" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="did" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_events_eventType">
+          <End Role="eventType" Type="Self.eventType" Multiplicity="0..1" />
+          <End Role="events" Type="Self.events" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="eventType">
+              <PropertyRef Name="eventType1" />
+            </Principal>
+            <Dependent Role="events">
+              <PropertyRef Name="etype" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_foodOrders_events">
+          <End Role="events" Type="Self.events" Multiplicity="1" />
+          <End Role="foodOrders" Type="Self.foodOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="events">
+              <PropertyRef Name="eid" />
+            </Principal>
+            <Dependent Role="foodOrders">
+              <PropertyRef Name="eid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eventManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="decorationPlans" EntityType="Self.decorationPlans" />
+          <EntitySet Name="events" EntityType="Self.events" />
+          <EntitySet Name="eventType" EntityType="Self.eventType" />
+          <EntitySet Name="foodItems" EntityType="Self.foodItems" />
+          <EntitySet Name="foodOrders" EntityType="Self.foodOrders" />
+          <AssociationSet Name="FK_events_decorationPlans" Association="Self.FK_events_decorationPlans">
+            <End Role="decorationPlans" EntitySet="decorationPlans" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_events_eventType" Association="Self.FK_events_eventType">
+            <End Role="eventType" EntitySet="eventType" />
+            <End Role="events" EntitySet="events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_foodOrders_events" Association="Self.FK_foodOrders_events">
+            <End Role="events" EntitySet="events" />
+            <End Role="foodOrders" EntitySet="foodOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eventManagementModelStoreContainer" CdmEntityContainer="eventManagementEntities">
+          <EntitySetMapping Name="decorationPlans">
+            <EntityTypeMapping TypeName="eventManagementModel.decorationPlans">
+              <MappingFragment StoreEntitySet="decorationPlans">
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="dname" ColumnName="dname" />
+                <ScalarProperty Name="pricePerH" ColumnName="pricePerH" />
+                <ScalarProperty Name="url" ColumnName="url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="events">
+            <EntityTypeMapping TypeName="eventManagementModel.events">
+              <MappingFragment StoreEntitySet="events">
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="etype" ColumnName="etype" />
+                <ScalarProperty Name="edate" ColumnName="edate" />
+                <ScalarProperty Name="gathering" ColumnName="gathering" />
+                <ScalarProperty Name="did" ColumnName="did" />
+                <ScalarProperty Name="d_price" ColumnName="d_price" />
+                <ScalarProperty Name="f_price" ColumnName="f_price" />
+                <ScalarProperty Name="total" ColumnName="total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="eventType">
+            <EntityTypeMapping TypeName="eventManagementModel.eventType">
+              <MappingFragment StoreEntitySet="eventType">
+                <ScalarProperty Name="eventType1" ColumnName="eventType1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="foodItems">
+            <EntityTypeMapping TypeName="eventManagementModel.foodItems">
+              <MappingFragment StoreEntitySet="foodItems">
+                <ScalarProperty Name="fid" ColumnName="fid" />
+                <ScalarProperty Name="fname" ColumnName="fname" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="f_desc" ColumnName="f_desc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="foodOrders">
+            <EntityTypeMapping TypeName="eventManagementModel.foodOrders">
+              <MappingFragment StoreEntitySet="foodOrders">
+                <ScalarProperty Name="fo_id" ColumnName="fo_id" />
+                <ScalarProperty Name="eid" ColumnName="eid" />
+                <ScalarProperty Name="fid" ColumnName="fid" />
+                <ScalarProperty Name="qty" ColumnName="qty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

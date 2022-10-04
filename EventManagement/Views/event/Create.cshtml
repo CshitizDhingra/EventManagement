@@ -1,0 +1,213 @@
+﻿@model EventManagement.Models.eventMVCModel
+
+@{
+    ViewBag.Title = "Create";
+}
+<style>
+    th, td {
+        padding: 10px
+    }
+    #customEvent{
+        display:none;
+    }
+    input{
+        border:none;
+    }
+    #contents{
+        width:300%;
+        max-width:500%;
+    }
+</style>
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>events</h4>
+    @if (ViewData["Success"] != null)
+    {
+        <div id="successMessage" style="color:red">
+            @ViewData["Success"]
+        </div>
+    }
+    <hr />
+    <div class="form-group">
+        @Html.Label("Event Type", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("etype", null, htmlAttributes: new { @class = "form-control",id="etype" })
+            @Html.ValidationMessageFor(model => model.etype, "", new { @class = "text-danger" })
+            <br />
+            @Html.EditorFor(model => model.etype, new { htmlAttributes = new {@class="form-control",id="customEvent",@placeholder="Enter Event Type"}})
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Event Date", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.edate, new { htmlAttributes = new { @class = "form-control", @type = "date", id = "date" } })
+
+            @Html.ValidationMessageFor(model => model.edate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Event ID", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.eid, new { htmlAttributes = new { @class = "form-control", id = "eid", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.eid, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Gathering", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.gathering, new { htmlAttributes = new { @class = "form-control",@min=10, @max = "500" } })
+            @Html.ValidationMessageFor(model => model.gathering, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Decoration", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("did", null, htmlAttributes: new { @class = "form-control", @id = "decorDD" })
+            @Html.ValidationMessageFor(model => model.did, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div id="desc">
+
+    </div>
+
+    <div class="form-group">
+        <table class="foodItems" >
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Food Item
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Contents
+                </th>
+            </tr>
+            
+                @for (var i = 0; i < Model.foodItems.Count(); i++)
+                {
+                <tr>
+                    <td>
+                        @Html.CheckBoxFor(m => Model.foodItems[i].Checked)
+                        @Html.HiddenFor(m => Model.foodItems[i].fid)
+                    </td>
+                    <td>@Html.EditorFor(m => Model.foodItems[i].fname, new { htmlAttributes = new { @readonly = "readonly" } })</td>
+                    <td>@Html.EditorFor(m => Model.foodItems[i].price, new { htmlAttributes = new { @id="pricing",@readonly = "readonly" } })</td>
+                    <td>@Html.EditorFor(m => Model.foodItems[i].f_desc, new { htmlAttributes = new { @id="contents",@readonly = "readonly" } })</td>
+                </tr>
+
+            }
+                <tr>
+                </tr>
+            </table>
+    </div>
+    @*<div class="form-group" style="width:50%;display:flex;justify-content:center">
+        <input type="button" value="Estimate" class="btn btn-default" id="est" />
+    </div>*@
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.d_price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.d_price, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.d_price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.fo_id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.fo_id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.fo_id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.f_price, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.f_price, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.f_price, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.total, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.ValidationMessageFor(model => model.total, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Finalize Event" class="btn btn-default" /> 
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @* dynamic EID *@
+    <script>
+        $('#etype').on('change', function () {
+            if ($('#etype').val() == "Koi or") {
+                $('#customEvent').show();
+            } else {
+                $('#customEvent').hide();
+            }
+        })
+    </script>
+    @*Check Date*@
+    <script>
+        $("#date").on('input', function () {
+            var date = $("#date").val().split("-").reverse().join("-");
+            var dateList =@Html.Raw(Json.Encode(@ViewBag.eventDate));
+            const avl = dateList.indexOf(date);
+            if (avl > -1) {
+                alert("Date Unavailable");
+                @{ViewData["Success"] = "DATE UNAVAILABLE"; }
+            } else {
+                var id = date.split("-").join("");
+                $("#eid").val(id);
+            }
+        })
+    </script>
+    @*estimate*@
+    @*@<script>
+        $('#est').on('click', function (){
+            var gathering = $('#gathering').val();
+            console.log(gathering);
+            var did = $('#decorDD').val();
+            console.log(did);
+            var decors =@Html.Raw(Json.Encode(@ViewBag.did));
+            console.log(decors);
+            var dprice = gathering * decors[did - 1]["dprice"];
+            console.log(dprice);
+            @*$('#d_price').val(dprice);
+        })
+    </script>*@
+
+}
+
+
