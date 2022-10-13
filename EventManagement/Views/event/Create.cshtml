@@ -73,7 +73,7 @@
     <div class="form-group">
         @Html.Label("Decoration", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("did", null, htmlAttributes: new { @class = "form-control", @id = "decorDD" })
+            @Html.DropDownList("did", new SelectList(ViewBag.did,"did","dname"), htmlAttributes: new { @class = "form-control", @id = "decorDD" })
             @Html.ValidationMessageFor(model => model.did, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -116,10 +116,10 @@
                 </tr>
             </table>
     </div>
-    @*<div class="form-group" style="width:50%;display:flex;justify-content:center">
+    <div class="form-group" style="width:50%;display:flex;justify-content:center">
         <input type="button" value="Estimate" class="btn btn-default" id="est" />
-    </div>*@
-    @*<div class="form-group">
+    </div>
+    <div class="form-group">
         @Html.LabelFor(model => model.d_price, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.d_price, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
@@ -149,7 +149,7 @@
             @Html.EditorFor(model => model.total, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
             @Html.ValidationMessageFor(model => model.total, "", new { @class = "text-danger" })
         </div>
-    </div>*@
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -193,7 +193,7 @@
             }
         })
     </script>
-    @*estimate*@
+    @*ESTIMATE : circular reference*@
     @*@<script>
         $('#est').on('click', function (){
             var gathering = $('#gathering').val();
@@ -203,11 +203,9 @@
             var decors =@Html.Raw(Json.Encode(@ViewBag.did));
             console.log(decors);
             var dprice = gathering * decors[did - 1]["dprice"];
-            console.log(dprice);
-            @*$('#d_price').val(dprice);
+            $('#d_price').val(dprice);
         })
     </script>*@
-
 }
 
 

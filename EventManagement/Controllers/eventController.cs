@@ -79,7 +79,8 @@ namespace EventManagement.Controllers
                     }
                     catch (Exception ex)
                     {
-                        ViewData["Success"] = "ERROR !";
+                        ViewData["Success"] = "DATABASE ERROR";
+                        System.Diagnostics.Debug.WriteLine(ex.Message);
                     }
                 }
                 else
@@ -89,7 +90,7 @@ namespace EventManagement.Controllers
             }
             else
             {
-                ViewData["Success"] = "SELECT APPROPRIATE DATA";
+                ViewData["Success"] = "SELECT APPROPRIATE DATE ";
             }
             ViewBag.did = new SelectList(db.decorationPlans, "did", "dname", e.did);
             ViewBag.etype = new SelectList(db.eventType, "eventType1", "eventType1", e.etype);

@@ -21,8 +21,6 @@ namespace EventManagement.Models
         public Nullable<int> fo_id { get; set; }
         public Nullable<int> f_price { get; set; }
         public Nullable<int> total { get; set; }
-
-
         public virtual decorationPlans decorationPlans { get; set; }
         public virtual eventType eventType { get; set; }
         public virtual ICollection<foodOrders> foodOrders { get; set; }
